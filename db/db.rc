@@ -1,0 +1,3 @@
+DB=gallery
+APP_USER=gallery-service
+APP_PASSWORD=gallery-service

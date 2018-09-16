@@ -1,0 +1,22 @@
+version: '3'
+services:
+ gallery-service:
+    container_name: gallery-service
+    hostname: gallery-service
+    build:
+      context: .
+      args:
+        - repo=/go/src/github.com/hyperjiang/gallery-service
+    image: gallery-service:1.0
+    volumes:
+    - "./runtime:/runtime"
+    expose:
+    - 10000
+    ports:
+    - "10000:80"
+    networks:
+    - docker-backend
+networks:
+  docker-backend:
+    external:
+      name: docker-backend

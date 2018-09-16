@@ -1,0 +1,5 @@
+main:
+  uri: gallery-service:gallery-service@tcp(mariadb:3306)/gallery?charset=utf8
+  max_idle_conns: 2
+  max_open_conns: 10
+  conn_max_lifetime: 60
