@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html>
+<body>
+<div id="app">
+
+<div>
+{{ range .files }}
+    <img src="/file?s={{ .Checksum }}" alt="{{ .Name }}" />
+{{ end }}
+</div>
+
+</div>
+</body>
+</html>

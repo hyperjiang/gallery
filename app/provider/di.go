@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"database/sql"
 	"log"
 	"sync"
 
@@ -107,4 +108,9 @@ func (di *Container) DB() *sqlx.DB {
 		return nil
 	}
 	return client.(*sqlx.DB)
+}
+
+// DBInsert - helper for inserting data into db table
+func (di *Container) DBInsert(table string, data interface{}) (sql.Result, error) {
+	return DBInsert(di.DB(), table, data)
 }

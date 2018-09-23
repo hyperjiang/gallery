@@ -49,6 +49,8 @@ help:
 	# connredis                 - connect to redis
 	#
 	# [PROJECT]
+	# initdb                    - initialize DBs (current project need to provide ./db/ and ./db/migrations/)
+    # migration                 - run db migration, you can specify v={version} to migrate to the {version} you want
 	# gomod-init                - run "go mod init"
 	# gomod-verify              - run "go mod verify"
 	# gomod-vendor              - run "go mod vendor"

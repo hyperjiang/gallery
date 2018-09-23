@@ -1,12 +1,11 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/hyperjiang/gallery-service/app/provider"
 	"github.com/hyperjiang/gallery-service/app/router"
 
 	"log"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -26,6 +25,7 @@ func main() {
 
 	app := gin.Default()
 
+	app.LoadHTMLGlob(di.Config().Server.ViewDir + "/*")
 	app.StaticFile("/favicon.ico", di.Config().Server.PublicDir+"/favicon.ico")
 
 	router.Route(app)
