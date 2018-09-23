@@ -6,8 +6,17 @@
 
 <div>
 {{ range .files }}
-    <img src="/file?s={{ .Checksum }}" alt="{{ .Name }}" />
+    {{ if .IsImage }}
+    <img width="300" style="max-width:300px; max-height:300px" src="/file?s={{ .Checksum }}" alt="{{ .Name }}" />
+    {{ else }}
+    <video width="300" controls>
+        <source src="/file?s={{ .Checksum }}" type="{{ .Type }}">
+        Your browser does not support the video tag.
+    </video>
+    {{ end }}
 {{ end }}
+
+
 </div>
 
 </div>

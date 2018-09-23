@@ -1,6 +1,7 @@
 package model
 
 import (
+	"regexp"
 	"time"
 
 	"github.com/hyperjiang/gallery-service/app/provider"
@@ -49,6 +50,20 @@ func (f *File) GetByChecksum(checksum string) error {
 	return provider.DI().DB().Get(f, `
         SELECT * FROM file WHERE checksum = ? LIMIT 1
     `, checksum)
+}
+
+// IsImage - return true when the file is an image
+func (f *File) IsImage() bool {
+	reg := regexp.MustCompile("^(.+)\\/.+$")
+	matches := reg.FindStringSubmatch(f.Type)
+	return len(matches) == 2 && matches[1] == "image"
+}
+
+// IsVideo - return true when the file is a video
+func (f *File) IsVideo() bool {
+	reg := regexp.MustCompile("^(.+)\\/.+$")
+	matches := reg.FindStringSubmatch(f.Type)
+	return len(matches) == 2 && matches[1] == "video"
 }
 
 // Get - get file list

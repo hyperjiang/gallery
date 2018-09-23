@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/h2non/filetype/types"
@@ -34,6 +35,17 @@ func (ctrl *FileController) Upload(c *gin.Context) {
 		return
 	}
 
+	mime := types.NewMIME(file.Header.Get("Content-Type"))
+
+	reg := regexp.MustCompile("^(.+)\\/.+$")
+	matches := reg.FindStringSubmatch(mime.Value)
+	if len(matches) != 2 || (matches[1] != "image" && matches[1] != "video") {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Unsupported file type: " + mime.Value,
+		})
+		return
+	}
+
 	f, err := file.Open()
 	defer f.Close()
 	if err != nil {
@@ -53,8 +65,6 @@ func (ctrl *FileController) Upload(c *gin.Context) {
 
 	checksum := fmt.Sprintf("%x", h.Sum(nil))
 
-	mime := types.NewMIME(file.Header.Get("Content-Type"))
-
 	dir := filepath.Join(
 		provider.DI().Config().Server.UploadDir,
 		checksum[0:2],
@@ -62,7 +72,6 @@ func (ctrl *FileController) Upload(c *gin.Context) {
 	)
 	filename := checksum + "." + mime.Subtype
 	dst := filepath.Join(dir, filename)
-	fmt.Println(dst)
 
 	// Upload the file to specific dst.
 	os.MkdirAll(dir, os.ModePerm)
