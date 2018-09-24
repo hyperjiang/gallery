@@ -15,9 +15,7 @@ type File struct {
 	Type      string    `db:"type"`
 	Size      uint32    `db:"size"`
 	Checksum  string    `db:"checksum"`
-	UserID    uint32    `db:"user_id"`
 	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
 }
 
 // Files - file list
@@ -26,9 +24,7 @@ type Files []*File
 // Create - create a file record
 func (f *File) Create() error {
 
-	now := time.Now()
-	f.CreatedAt = now
-	f.UpdatedAt = now
+	f.CreatedAt = time.Now()
 
 	res, err := provider.DI().DBInsert("file", f)
 	if err != nil {

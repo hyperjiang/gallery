@@ -1,0 +1,4 @@
+admins:
+  - name: hyper
+    password: 123456
+    email: hyperjiang@gmail.com

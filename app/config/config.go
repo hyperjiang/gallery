@@ -11,6 +11,7 @@ import (
 
 // Config - the config structure
 type Config struct {
+	Admin    AdminConfig
 	Database DatabaseConfig
 	Server   ServerConfig
 }
@@ -19,6 +20,7 @@ var configDir string
 
 // config file names
 var (
+	adminConf    = "admin"
 	databaseConf = "database"
 	serverConf   = "server"
 )
@@ -52,6 +54,12 @@ func Load(filename string, config interface{}) error {
 // LoadAll - load all configs
 func LoadAll() *Config {
 
+	var admin AdminConfig
+	if err := Load(adminConf, &admin); err != nil {
+		log.Println("Cannot load admin config file")
+		return nil
+	}
+
 	var db DatabaseConfig
 	if err := Load(databaseConf, &db); err != nil {
 		log.Println("Cannot load database config file")
@@ -65,6 +73,7 @@ func LoadAll() *Config {
 	}
 
 	return &Config{
+		Admin:    admin,
 		Database: db,
 		Server:   server,
 	}
