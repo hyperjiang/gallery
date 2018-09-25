@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
  gallery-service:
     container_name: gallery-service
