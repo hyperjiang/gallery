@@ -27,6 +27,7 @@ func main() {
 
 	app.LoadHTMLGlob(di.Config().Server.ViewDir + "/*")
 	app.StaticFile("/favicon.ico", di.Config().Server.PublicDir+"/favicon.ico")
+	app.StaticFile("/robots.txt", di.Config().Server.PublicDir+"/robots.txt")
 
 	router.Route(app)
 

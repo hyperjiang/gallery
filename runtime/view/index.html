@@ -37,7 +37,7 @@
             {{ if .IsImage }}
             <a data-fancybox="gallery" href="/file?s={{ .Checksum }}"><img src="/file?s={{ .Checksum }}" style="max-width:300px; max-height:300px" alt="{{ .Name }}"></a>
             {{ else }}
-            <video width="400" controls id="v{{ .ID }}">
+            <video width="300" controls id="v{{ .ID }}">
                 <source src="/file?s={{ .Checksum }}" type="{{ .Type }}">
                 Your browser does not support the video tag.
             </video>
