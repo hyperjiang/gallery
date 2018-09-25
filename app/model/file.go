@@ -62,9 +62,22 @@ func (f *File) IsVideo() bool {
 	return len(matches) == 2 && matches[1] == "video"
 }
 
-// Get - get file list
-func (fs *Files) Get() error {
+// CountFilesByType - count files by type
+func CountFilesByType(t string) (uint, error) {
+	var count uint
+	err := provider.DI().DB().Get(&count, `
+		SELECT COUNT(0) FROM file
+		WHERE type LIKE ?
+	`, t+"%")
+	return count, err
+}
+
+// GetByType - get file list by type
+func (fs *Files) GetByType(t string, limit, offset uint) error {
 	return provider.DI().DB().Select(fs, `
-        SELECT * FROM file ORDER BY ID DESC;
-    `)
+		SELECT * FROM file
+		WHERE type LIKE ?
+		ORDER BY ID DESC
+		LIMIT ? OFFSET ?
+    `, t+"%", limit, offset)
 }
