@@ -11,8 +11,6 @@ func Route(app *gin.Engine) {
 	indexController := new(controller.IndexController)
 
 	app.GET(
-		"/", indexController.Index,
-	).GET(
 		"/version", indexController.Version,
 	)
 
@@ -22,10 +20,12 @@ func Route(app *gin.Engine) {
 	)
 
 	accounts := provider.DI().Config().Admin.Accounts()
-	authorized := app.Group("/upload", gin.BasicAuth(accounts))
+	authorized := app.Group("/", gin.BasicAuth(accounts))
 	authorized.GET(
-		"", fileController.Form,
+		"", indexController.Index,
+	).GET(
+		"upload", fileController.Form,
 	).POST(
-		"", fileController.Upload,
+		"upload", fileController.Upload,
 	)
 }

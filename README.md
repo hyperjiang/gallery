@@ -33,8 +33,3 @@ make logs
 ```
 make down
 ```
-
-## TODO
-
-- replace golang template by some javascript framework like react or vuejs
-- add unit tests
